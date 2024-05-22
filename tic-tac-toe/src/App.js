@@ -1,11 +1,11 @@
 import './App.css';
-import Board from './components/Board';
+import Box from './components/Box';
 import { PlayerContextProvider } from './store/PlayerContext';
 
 function App() {
   return (
     <PlayerContextProvider>
-       <Board />
+       <Box />
     </PlayerContextProvider>
     
   );

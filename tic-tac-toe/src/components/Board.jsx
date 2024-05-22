@@ -1,12 +1,20 @@
-import React, { useContext, useState } from 'react'
 import PlayerContext from '../store/PlayerContext'
+import React, { useContext, useState } from 'react'
 
-const Board = () => {
+const Board = ({value, onClick}) => {
 
     const playerCtx = useContext(PlayerContext);
 
+    function handleClick(i){
+        console.log(i)
+        playerCtx.changeText(i)
+        playerCtx.changeplayer()
+    }
+
   return (
-    <div>{playerCtx.boardValues.map(v => v)}</div>
+    <>{playerCtx.boardValues.map((v,i) => {
+    return <h3 key={i} className='grid-item' onClick={handleClick.bind(null,i)}>{v}</h3>
+    })}</>
   )
 }
 
