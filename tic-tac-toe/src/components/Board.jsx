@@ -5,10 +5,15 @@ const Board = ({value, onClick}) => {
 
     const playerCtx = useContext(PlayerContext);
 
+    if(playerCtx.win){
+        alert("You Win!")
+    }
+
     function handleClick(i){
         console.log(i)
         playerCtx.changeText(i)
         playerCtx.changeplayer()
+        playerCtx.checkWin()
     }
 
   return (

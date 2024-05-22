@@ -10,6 +10,7 @@ const ACTIONS = {
 const PlayerContext = createContext({
     boardValues: [],
     currentPlayer: '',
+    win: false,
     changeplayer: () => {},
     checkWin: () => {},
     changeText: () => {}
@@ -21,7 +22,6 @@ function boardReducer(state, action){
         let updatedPlayer = state.currentPlayer
 
         updatedPlayer = updatedPlayer==="X" ? "O":"X"
-        console.log(updatedPlayer)
         return {...state, currentPlayer: updatedPlayer}
     }
 
@@ -32,11 +32,24 @@ function boardReducer(state, action){
         return {...state, value: updatedBoard}
     }
 
+    if(action.type === ACTIONS.WIN_CHECK){
+        let updatedBoard = [...state.value]
+        
+        console.log(updatedBoard[0] + " " + updatedBoard[1] + " " + updatedBoard[2])
+        console.log((updatedBoard[0] === updatedBoard[1] && updatedBoard[1] === updatedBoard[2] && updatedBoard[2] === updatedBoard[3]))
+        
+        if(updatedBoard[0] === updatedBoard[1] && updatedBoard[1] === updatedBoard[2]){
+            return {...state, win: true}
+        }
+
+        return state
+    }
+
 }
 
 export function PlayerContextProvider({children}){
 
-    const [board, dispatchBoardAction] = useReducer(boardReducer,{value:["-","-","-","-","-","-","-","-","-"], currentPlayer: 'X'});
+    const [board, dispatchBoardAction] = useReducer(boardReducer,{value:["-","-","-","-","-","-","-","-","-"], currentPlayer: 'X', win: false});
 
     function changeplayer(){
         dispatchBoardAction({type: "CHANGE_PLAYER"})
@@ -47,12 +60,13 @@ export function PlayerContextProvider({children}){
     }
 
     function checkWin(){
-        dispatchBoardAction({type: "WIN_CHECK"})
+        dispatchBoardAction({type: ACTIONS.WIN_CHECK})
     }
 
     const playerContext = {
         boardValues: board.value,
         currentPlayer: board.changeplayer,
+        win: board.win,
         changeplayer,
         checkWin,
         changeText
