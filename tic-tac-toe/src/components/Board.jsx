@@ -1,11 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import PlayerContext from '../store/PlayerContext'
 
 const Board = () => {
 
-   const [boardValue, setBoardValue] =  useState(["-","-","-","-","-","-","-","-","-"])
+    const playerCtx = useContext(PlayerContext);
 
   return (
-    <div>{boardValue.map(val => val)}</div>
+    <div>{playerCtx.boardValues.map(v => v)}</div>
   )
 }
 
