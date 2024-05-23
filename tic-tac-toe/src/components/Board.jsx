@@ -1,24 +1,25 @@
 import PlayerContext from '../store/PlayerContext'
-import React, { useContext, useEffect } from 'react'
+import { useContext} from 'react'
 
 const Board = ({value, onClick}) => {
 
     const playerCtx = useContext(PlayerContext);
 
-    console.log(playerCtx.currentPlayer)
-
-    useEffect(()=>{
-        if(playerCtx.win){
-            alert("You Win!")
-        }
-    },[playerCtx.win])
-
+  
   
 
     function handleClick(i){
         playerCtx.changeText(i)
         playerCtx.changeplayer()
+        console.log("AFTER: "+ playerCtx.boardValues)
         playerCtx.checkWin()
+        playerCtx.checkDraw()
+          // const timeout = setTimeout(()=>{
+          //   playerCtx.checkWin()
+          //   playerCtx.checkDraw()
+          //   clearTimeout(timeout)
+          // },2000)
+     
     }
 
   return (
