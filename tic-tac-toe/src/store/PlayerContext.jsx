@@ -89,11 +89,11 @@ function boardReducer(state, action){
     }
 
     if(action.type === ACTIONS.DRAW_CHECK){
-        let updatedBoard = [...state.value]
-        let draw = state.draw
+            let updatedBoard = [...state.value]
+            let draw = state.draw
        if(!updatedBoard.includes("-")){
-        draw = draw+1
-        return {...state, isDraw: true, draw}
+            draw = draw+1
+            return {...state, isDraw: true, draw}
        }
 
        return state
