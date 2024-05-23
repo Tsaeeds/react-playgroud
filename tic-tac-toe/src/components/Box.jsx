@@ -2,6 +2,7 @@
 // import PlayerContext from '../store/PlayerContext'
 import Board from './Board'
 
+
 const Box = () => {
 
      //const playerCtx = useContext(PlayerContext);
@@ -9,7 +10,9 @@ const Box = () => {
 
  
   return (
-    <div id='box' className='grid-container'><Board /> </div>
+    <div id='box' className='grid-container'>
+      <Board /> 
+      </div>
   )
 }
 

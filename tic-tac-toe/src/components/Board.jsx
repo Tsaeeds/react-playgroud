@@ -1,16 +1,21 @@
 import PlayerContext from '../store/PlayerContext'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 const Board = ({value, onClick}) => {
 
     const playerCtx = useContext(PlayerContext);
 
-    if(playerCtx.win){
-        alert("You Win!")
-    }
+    console.log(playerCtx.currentPlayer)
+
+    useEffect(()=>{
+        if(playerCtx.win){
+            alert("You Win!")
+        }
+    },[playerCtx.win])
+
+  
 
     function handleClick(i){
-        console.log(i)
         playerCtx.changeText(i)
         playerCtx.changeplayer()
         playerCtx.checkWin()
