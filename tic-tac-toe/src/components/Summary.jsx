@@ -1,6 +1,6 @@
 import Modal from './Modal'
 import PlayerContext from '../store/PlayerContext'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 const Summary = () => {
 
@@ -12,7 +12,7 @@ const Summary = () => {
   }
  
   return ( 
-      <Modal open={playerCtx.win===true || playerCtx.isDraw===true}>
+      <Modal open={playerCtx.win || playerCtx.isDraw}>
         {playerCtx.win && <p>Player {playerCtx.currentPlayer} Wins</p>}
         {playerCtx.isDraw && <p>It was draw</p>}
           <button onClick={handleClick}>Close</button>
