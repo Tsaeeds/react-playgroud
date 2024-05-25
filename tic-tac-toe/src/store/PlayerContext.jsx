@@ -4,8 +4,7 @@ import { createContext, useReducer } from "react";
 const ACTIONS = {
     CHANGE_PLAYER: "CHANGE_PLAYER",
     CHANGE_TEXT: "CHANGE_TEXT",
-    WIN_CHECK: "WIN_CHECK",
-    DRAW_CHECK: "DRAW_CHECK",
+    WIN_OR_DRAW_CHECK: "WIN_OR_DRAW_CHECK",
     RESET: "RESET",
     INCREMENT: "INCREMENT"
 }
@@ -20,7 +19,6 @@ const PlayerContext = createContext({
     oWin: 0,
     changeplayer: () => {},
     checkWin: () => {},
-    checkDraw: () => {},
     changeText: () => {},
     reset: () => {},
 })
@@ -29,7 +27,7 @@ function boardReducer(state, action){
 
     if(action.type === ACTIONS.RESET){
         let resetValue = ["-","-","-","-","-","-","-","-","-"]
-        let resetCurrentPlayer = 'X'
+        let resetCurrentPlayer = 'O'
         let resetWin = false
         let resetDraw = false
 
@@ -52,31 +50,23 @@ function boardReducer(state, action){
         return {...state, value: updatedBoard}
     }
 
-    if(action.type === ACTIONS.WIN_CHECK){
-        let updatedPlayer = state.currentPlayer
-        let updatedBoard = [...state.value]
-        let cPlayer = state.currentPlayer
-        let oWin = state.oWin
-        let xWin = state.xWin
+    if(action.type === ACTIONS.WIN_OR_DRAW_CHECK){
+        let bVals = [...state.value]
         
-        
+        if(    (bVals[0] === bVals[1] && bVals[1] === bVals[2] && bVals[2] === state.currentPlayer)
+            || (bVals[3] === bVals[4] && bVals[4] === bVals[5] && bVals[5] === state.currentPlayer)
+            || (bVals[6] === bVals[7] && bVals[7] === bVals[8] && bVals[8] === state.currentPlayer)
+            || (bVals[0] === bVals[3] && bVals[3] === bVals[6] && bVals[6] === state.currentPlayer)
+            || (bVals[1] === bVals[4] && bVals[4] === bVals[7] && bVals[7] === state.currentPlayer)
+            || (bVals[2] === bVals[5] && bVals[5] === bVals[8] && bVals[8] === state.currentPlayer)
+            || (bVals[0] === bVals[4] && bVals[4] === bVals[8] && bVals[8] === state.currentPlayer)
+            || (bVals[2] === bVals[4] && bVals[4] === bVals[6] && bVals[6] === state.currentPlayer)){
 
-        if(    (updatedBoard[0] === updatedBoard[1] && updatedBoard[1] === updatedBoard[2] && updatedBoard[2] === cPlayer)
-            || (updatedBoard[3] === updatedBoard[4] && updatedBoard[4] === updatedBoard[5] && updatedBoard[5] === cPlayer)
-            || (updatedBoard[6] === updatedBoard[7] && updatedBoard[7] === updatedBoard[8] && updatedBoard[8] === cPlayer)
-            || (updatedBoard[0] === updatedBoard[3] && updatedBoard[3] === updatedBoard[6] && updatedBoard[6] === cPlayer)
-            || (updatedBoard[1] === updatedBoard[4] && updatedBoard[4] === updatedBoard[7] && updatedBoard[7] === cPlayer)
-            || (updatedBoard[2] === updatedBoard[5] && updatedBoard[5] === updatedBoard[8] && updatedBoard[8] === cPlayer)
-            || (updatedBoard[0] === updatedBoard[4] && updatedBoard[4] === updatedBoard[8] && updatedBoard[8] === cPlayer)
-            || (updatedBoard[2] === updatedBoard[4] && updatedBoard[4] === updatedBoard[6] && updatedBoard[6] === cPlayer)){
-
-            if(updatedPlayer==="X"){
-                xWin = xWin+1
-                return {...state, win: true, xWin: xWin}
+            if(state.currentPlayer==="X"){
+                return {...state, win: true, xWin: ++state.xWin}
             }
             else{
-                oWin = oWin+1
-                return {...state, win: true, oWin: oWin}
+                return {...state, win: true, oWin: ++state.oWin}
             }
         
                 
@@ -92,18 +82,6 @@ function boardReducer(state, action){
         return state
     }
 
-    if(action.type === ACTIONS.DRAW_CHECK){
-            let updatedBoard = [...state.value]
-            let draw = state.draw
-       if(!updatedBoard.includes("-")){
-            draw = draw+1
-            return {...state, isDraw: true, draw}
-       }
-
-       return state
-    }
-
-   
 
 }
 
@@ -129,13 +107,10 @@ export function PlayerContextProvider({children}){
 
     }
 
-    function checkWin(){
-        dispatchBoardAction({type: ACTIONS.WIN_CHECK})
+    function checkWinOrDraw(){
+        dispatchBoardAction({type: ACTIONS.WIN_OR_DRAW_CHECK})
     }
 
-    function checkDraw(){
-        dispatchBoardAction({type: ACTIONS.DRAW_CHECK})
-    }
 
     function reset(){
         dispatchBoardAction({type: ACTIONS.RESET})
@@ -153,8 +128,7 @@ export function PlayerContextProvider({children}){
         xWin: board.xWin,
         oWin: board.oWin,
         changeplayer,
-        checkWin,
-        checkDraw,
+        checkWinOrDraw,
         changeText,
         reset
     }

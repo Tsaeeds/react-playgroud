@@ -5,6 +5,8 @@ import Summary from './components/Summary';
 import { PlayerContextProvider } from './store/PlayerContext';
 
 function App() {
+
+
   return (
 
       <PlayerContextProvider>
