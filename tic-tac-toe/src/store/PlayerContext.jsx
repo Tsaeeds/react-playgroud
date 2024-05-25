@@ -26,7 +26,7 @@ const PlayerContext = createContext({
 function boardReducer(state, action){
 
     if(action.type === ACTIONS.RESET){
-        let resetValue = ["-","-","-","-","-","-","-","-","-"]
+        let resetValue = ["--","--","--","--","--","--","--","--","--"]
         let resetCurrentPlayer = 'O'
         let resetWin = false
         let resetDraw = false
@@ -37,14 +37,18 @@ function boardReducer(state, action){
 
     if(action.type === ACTIONS.CHANGE_PLAYER){
         let updatedPlayer = state.currentPlayer
+        let updatedBoard = [...state.value]
 
-        updatedPlayer = updatedPlayer==="X" ? "O":"X"
-        return {...state, currentPlayer: updatedPlayer}
+        if(updatedBoard[action.position]==="--"){
+            updatedPlayer = updatedPlayer==="X" ? "O":"X"
+            return {...state, currentPlayer: updatedPlayer}
+        }
+        return state
     }
 
     if(action.type === ACTIONS.CHANGE_TEXT){
         let updatedBoard = [...state.value]
-        if(updatedBoard[action.position]==="-")
+        if(updatedBoard[action.position]==="--")
             updatedBoard[action.position] = state.currentPlayer
 
         return {...state, value: updatedBoard}
@@ -73,7 +77,7 @@ function boardReducer(state, action){
         }else{
             let updatedBoard = [...state.value]
             let draw = state.draw
-            if(!updatedBoard.includes("-")){
+            if(!updatedBoard.includes("--")){
                     draw = draw+1
                     return {...state, isDraw: true, draw}
             }
@@ -88,7 +92,7 @@ function boardReducer(state, action){
 export function PlayerContextProvider({children}){
 
     const [board, dispatchBoardAction] = useReducer(boardReducer,
-        {value:["-","-","-","-","-","-","-","-","-"],
+        {value:["--","--","--","--","--","--","--","--","--"],
          currentPlayer: 'O',
          win: false,
          isDraw: false,
@@ -98,8 +102,8 @@ export function PlayerContextProvider({children}){
         });
 
 
-    function changeplayer(){
-        dispatchBoardAction({type: ACTIONS.CHANGE_PLAYER})
+    function changeplayer(position){
+        dispatchBoardAction({type: ACTIONS.CHANGE_PLAYER, position})
     }
 
     function changeText(position){

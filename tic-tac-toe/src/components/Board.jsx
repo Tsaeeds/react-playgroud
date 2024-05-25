@@ -8,14 +8,16 @@ const Board = ({value, onClick}) => {
 
     function handleClick(i){
 
-      if(playerCtx.currentPlayer==="O"){
-        document.getElementById(i).classList.add("xButtonColor")
-
-      }else{
+      if(playerCtx.currentPlayer==="O" && playerCtx.boardValues[i]==="--"){
         document.getElementById(i).classList.add("oButtonColor")
+        document.getElementById(i).classList.remove("xButtonColor")
+
+      }else if(playerCtx.currentPlayer==="X" && playerCtx.boardValues[i]==="--"){
+        document.getElementById(i).classList.add("xButtonColor")
+        document.getElementById(i).classList.remove("oButtonColor")
       }
 
-      playerCtx.changeplayer()
+      playerCtx.changeplayer(i)
       playerCtx.changeText(i)
       playerCtx.checkWinOrDraw()
      
