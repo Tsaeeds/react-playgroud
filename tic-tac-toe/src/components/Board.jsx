@@ -1,5 +1,5 @@
 import PlayerContext from '../store/PlayerContext'
-import { useContext, useState} from 'react'
+import { useContext} from 'react'
 
 const Board = ({value, onClick}) => {
 
