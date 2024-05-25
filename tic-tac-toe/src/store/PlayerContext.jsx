@@ -33,11 +33,8 @@ function boardReducer(state, action){
         let resetWin = false
         let resetDraw = false
 
-      //value:["-","-","-","-","-","-","-","-","-"], currentPlayer: 'X', win: false
         return {...state, value: resetValue, currentPlayer: resetCurrentPlayer, win: resetWin, isDraw: resetDraw}
     }
-
-
 
 
     if(action.type === ACTIONS.CHANGE_PLAYER){
@@ -83,6 +80,13 @@ function boardReducer(state, action){
             }
         
                 
+        }else{
+            let updatedBoard = [...state.value]
+            let draw = state.draw
+            if(!updatedBoard.includes("-")){
+                    draw = draw+1
+                    return {...state, isDraw: true, draw}
+            }
         }
 
         return state
@@ -107,7 +111,7 @@ export function PlayerContextProvider({children}){
 
     const [board, dispatchBoardAction] = useReducer(boardReducer,
         {value:["-","-","-","-","-","-","-","-","-"],
-         currentPlayer: 'X', 
+         currentPlayer: 'O',
          win: false,
          isDraw: false,
          draw: 0,

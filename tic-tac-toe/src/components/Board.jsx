@@ -7,11 +7,12 @@ const Board = ({value, onClick}) => {
   
 
     function handleClick(i){
+      playerCtx.changeplayer()
         playerCtx.changeText(i)
-        playerCtx.changeplayer()
-        console.log("AFTER: "+ playerCtx.boardValues)
         playerCtx.checkWin()
-        playerCtx.checkDraw()
+        
+        // playerCtx.checkDraw()
+  
      
     }
 

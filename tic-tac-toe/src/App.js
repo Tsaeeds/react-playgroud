@@ -6,11 +6,12 @@ import { PlayerContextProvider } from './store/PlayerContext';
 
 function App() {
   return (
-    <PlayerContextProvider>
-      <Header />
-       <Box />
-       <Summary />
-    </PlayerContextProvider>
+
+      <PlayerContextProvider>
+        <Header />
+        <Box />
+        <Summary />
+      </PlayerContextProvider>
     
   );
 }
