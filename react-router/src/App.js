@@ -13,7 +13,7 @@ const route = createBrowserRouter([
   errorElement: <Error />,
   children:[
     {
-      path: "",
+      index: true,
       element: <Home />,
     },
     { // "/product: absolute path" "product: relative path"
