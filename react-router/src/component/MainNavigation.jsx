@@ -1,11 +1,21 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 
 const MainNavigation = () => {
   return (
     <div>
-        <Link to='/'>Home</Link>
-        <Link to='/product'>Product</Link>
+        <NavLink to='/'
+        style={({isActive})=>({
+            color: isActive? 'green' : 'white'
+        })}
+        end>
+            Home
+        </NavLink>
+        <NavLink to='/product'
+         style={({isActive})=>({
+            color: isActive? 'green' : 'white'
+        })}
+        >Product</NavLink>
     </div>
   )
 }
